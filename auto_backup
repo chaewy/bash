@@ -1,0 +1,24 @@
+#!/bin/bash
+
+backup_dir="$HOME/backups"
+log_file="$backup_dir/backup.log"
+dirs_to_backup=("/etc" "/var/log" "/home")
+
+# Ensure backup directory exists
+mkdir -p $backup_dir
+
+# Backup each directory
+for dir in "${dirs_to_backup[@]}"; do
+    backup_file="$backup_dir/$(basename $dir)_backup_$(date +%F).tar.gz"
+    if tar -czf $backup_file $dir; then
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - Backup successful for $dir" >> $log_file
+    else
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - Backup FAILED for $dir" >> $log_file
+    fi
+done
+
+# Cleanup old backups (older than 7 days)
+find $backup_dir -type f -mtime +7 -exec rm {} \; >> $log_file 2>&1
+
+echo "Backup process completed. Check $log_file for details."
+
