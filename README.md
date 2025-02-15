@@ -1,4 +1,4 @@
-# Bash Script
+# Bash Script 🧠
 
 ## Features
 - User group management  
