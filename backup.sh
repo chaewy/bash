@@ -1,6 +1,7 @@
 #!/bin/bash
 
-backup_dir=/backups
+backup_dir="$HOME/backups"
 mkdir -p $backup_dir
 tar -czvf $backup_dir/etc_backup_$(date +%F).tar.gz /etc
-echo "backup completeddd"
+echo "Backup stored in $backup_dir"
+
